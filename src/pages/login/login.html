@@ -1,0 +1,37 @@
+<body>
+  
+      <form method="post">
+      
+        <h1>Iniciar sesión</h1>
+        
+        <fieldset>      
+          <label for="mail">Correo electrónico:</label>
+          <input type="email" id="mail" name="user_email"  [(ngModel)]="username">
+          
+          <label for="password">Contraseña:</label>
+          <input type="password" id="password" name="user_password"  [(ngModel)]="password">         
+        </fieldset>
+       
+    
+            
+        <div padding>
+          <ion-list>
+            <ion-item>
+              <ion-label>Seleccione un Usuario...</ion-label>
+              <ion-select name="f" [(ngModel)]="tipoUser" (ionChange)="UserValido()">
+                <ion-option value="usuario">Usuario</ion-option>
+                <ion-option value="admin">Administrador</ion-option>
+                <ion-option value="invitado">Invitado</ion-option>
+                <ion-option value="jugador1">Jugador 1</ion-option>
+                <ion-option value="jugador2">Jugador 2</ion-option>
+              </ion-select>
+            </ion-item>
+          </ion-list>
+        </div>
+
+        <button class="boton1" type="submit" (click)="login()">Iniciar sesión</button>
+        <button class="boton2" type="submit" (click)="Registrarse()">Registrarse</button>
+              
+      </form>
+      
+    </body>
