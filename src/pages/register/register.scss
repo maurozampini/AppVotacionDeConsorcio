@@ -1,19 +1,28 @@
 page-register {
-  
-  *, *:before, *:after {
-      -moz-box-sizing: border-box;
-      -webkit-box-sizing: border-box;
-      box-sizing: border-box;
-    }
+  /*
+ .acomodar {
+  display:  flex;
+  justify-content:  center;
+  align-content: space-between;
+  flex-wrap:  wrap;
+  align-items: center;
+} */
+    *, *:before, *:after {
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+      }
     
     body {
-      font-family: 'Nunito', sans-serif;
+      font-family: sans-serif;
       color: #0F2E49;
-        background: url("../assets/img/lineas.jpg") no-repeat; ;
-    
+      background: url("../assets/lineas.jpg");
+      justify-content: center;
+      align-content: space-between;
+      flex-wrap:  wrap;
+      align-items: center;
+      padding: 5%;
     }
-    
-
     
     h1 {
       margin: 0 0 30px 0;
@@ -21,9 +30,9 @@ page-register {
       color: white;
     }
     
+    input[type="text"],
     input[type="password"],
-    input[type="email"],
-    input[type="text"]
+    input[type="email"]
      {
       background: rgb(248, 245, 245);
       border: none;
@@ -33,13 +42,12 @@ page-register {
       outline: 0;
       padding: 15px;
       width: 100%;
-      background-color: #F8F8F8;
       color: #000000;
       box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
       margin-bottom: 30px;
       border-radius: 20px;
     }
-    
+    /*
     button{
       padding: 15px 30px 15px 30px;
       color: #FFF;
@@ -47,61 +55,103 @@ page-register {
       font-size: 18px;
       text-align: center;
       font-style: normal;
-    //  border-radius: 20px;
+      border-radius: 20px;
       width: 100%;
       border: 1px solid #14165E;
       border-width: 1px 1px 3px;
       box-shadow: 0 -1px 0 rgba(255,255,255,0.1) inset;
       margin-bottom: 10px;
-    }   
+    }   */
     
-    .boton1 {
-      padding: 15px 30px 15px 30px;
-      color: #FFF;
-      background-color: #006B36;
+ .boton1 {
+  width:60px;
+  height:60px;
+  border-radius:100%;
+  background:rgb(55, 70, 155);
+  left:0;
+  bottom:0;
+  position:absolute;
+  margin-left:16px;
+  margin-bottom:16px;
+  border:none;
+  outline:none;
+  color:#FFF;
+  font-size:36px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  transition:.5s;  
+    }
+    
+    .boton1:active {
+      box-shadow: 0px 3px 0 #FFF;
+
+      text-shadow: 0px 0px 0px #FFF;
+      background-color: rgba(0, 79, 85, 0.85);
       font-size: 18px;
       text-align: center;
       font-style: normal;
-    //  border-radius: 20px;
-      width: 100%;
-      border: 1px solid #14165E;
+      border: none;
+      margin-bottom: 14px;      
       border-width: 1px 1px 3px;
       box-shadow: 0 -1px 0 rgba(255,255,255,0.1) inset;
-      margin-bottom: 10px;
     }
 
     .boton2 {
+
+      width:60px;
+      height:60px;
+      border-radius:100%;
+      background:#008B69;
+      right: 10px;
+      bottom:0;
+      position:absolute;
+      margin-left:16px;
+      margin-bottom:16px;
+      border:none;
+      outline:none;
+      color:#FFF;
+      font-size:36px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+      transition:.5s;  
+    }
+
+    .boton2:active {
+
+      text-shadow: 0px 0px 0px #FFF;
       padding: 15px 30px 15px 30px;
       color: #FFF;
-      background-color: #CA0000;
+      background-color: rgba(89, 89, 89, 0.85);
       font-size: 18px;
       text-align: center;
       font-style: normal;
-    //  border-radius: 20px;
-      width: 100%;
-      border: 1px solid #14165E;
+      border: none;
       border-width: 1px 1px 3px;
       box-shadow: 0 -1px 0 rgba(255,255,255,0.1) inset;
-      margin-bottom: 10px;
+      margin-bottom: 14px;
     }
 
-
-    
     fieldset {
       margin-bottom: 30px;
       border: none;
     }
     
-
-    
     label {
       display: block;
       margin-bottom: 8px;
       color: white;
+      text-align: center;
     }
     
     label.light {
       font-weight: 300;
       display: inline;
     }
+
+
+}
+
+.alert{
+  > div{
+    background-color:#FF0015!important;
+    text-align: center;
   }
+}

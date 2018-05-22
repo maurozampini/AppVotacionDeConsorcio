@@ -1,12 +1,8 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { AngularFireModule} from 'angularfire2';
-import { AngularFireAuthModule,AngularFireAuth, } from 'angularfire2/auth';
-import {AngularFireDatabase, FirebaseListObservable} from 'angularfire2/database';
-import {firebase}  from 'firebase/database';
+import { Component, Inject } from '@angular/core';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { AlertController, LoadingController} from 'ionic-angular';
 import { LoginPage } from '../login/login';
-import { AlertController, LoadingController ,Loading} from 'ionic-angular';
-
 
 @IonicPage()
 @Component({
@@ -14,88 +10,111 @@ import { AlertController, LoadingController ,Loading} from 'ionic-angular';
   templateUrl: 'register.html',
 })
 export class RegisterPage {
+  platform: any;
+  selectedItem: any;
   username:string;
   password:string;
   Mensaje:string;
   passwordconfirm:string;
   
 
-  constructor(public spiner:LoadingController,
+  constructor(public spiner: LoadingController,
               public navCtrl: NavController,
-               public alertCtrl: AlertController,
-               public navParams: NavParams,
-               private _auth:AngularFireAuth) {
-  }
+              public alertCtrl: AlertController,
+              public navParams: NavParams,
+              private _auth: AngularFireAuth,
+              @Inject(Platform) platform)
+              {
+                this.navParams = navParams;
+                this.selectedItem = navParams.get('item');
+                this.platform = platform;
+                console.log(this.platform);
+                this.platform.registerBackButtonAction(() => { this.navCtrl.push(LoginPage) }); //Instrucción para volver al login al tocar backbutton
+              }
 
-  ionViewDidLoad() {
+  ionViewDidLoad()
+  {
     console.log('ionViewDidLoad RegisterPage');
   }
+
   async Aceptar()
   {
-    
-    if(this.password.length>5){
-    if(this.password==this.passwordconfirm)
-    try{
-         this.MiSpiner();
-        const result = await this._auth.auth.createUserWithEmailAndPassword(this.username,this.password);
-    
-        this.Mensaje=this.username + " Fue ingresado Exitosamente!"
-        alert(this.Mensaje);
-        this.navCtrl.push(LoginPage);
-      }
-      catch(e)
-      {
-     
-        console.error(e);
-        this.showAlert(e,"error al registrarse");
-      }
-    else
-      {this.showAlert("las claves no coinciden , intente nuevamente","error al registrarse")}
-  }
-  else
+    if(this.password != null && this.password.length > 5)
     {
-
-      this.showAlert("la clave debe contener por lo menos 6 caracteres","error al registrarse")
+      if(this.password == this.passwordconfirm)
+      {
+        if(this.username != null && this.username != "")
+        {
+          let espera = this.MiSpiner();
+          espera.present();    
+          await this._auth.auth.createUserWithEmailAndPassword(this.username, this.password)
+          .then(result => 
+            {
+              espera.dismiss();
+              this.Mensaje = this.username + " ¡Fue registrado exitosamente!";
+              alert(this.Mensaje);
+              this.navCtrl.pop();
+            })
+          .catch(error =>
+             {
+               espera.dismiss();
+               console.log(error);
+               setTimeout(() => {
+               this.showAlert(error.message, "Error al registrarse");
+               }, 500);
+             })
+        }
+      
+        else
+        {
+          this.showAlert("Faltar completar el correo electrónico", "Error al registrarse")
+        }
+      }
+      
+      else
+      {
+        this.showAlert("Las claves no coinciden, intente nuevamente", "Error al registrarse")
+      }
     }
 
+    else
+    {
+      this.showAlert("La clave debe contener por lo menos 6 caracteres", "Error al registrarse")
+    }
   }
-  showAlert(mensaje:string,titulo:string) {
-
+  
+  showAlert(mensaje: string, titulo: string)
+  {
     switch(mensaje)
     {
-      
       case "The email address is badly formatted.":
       {
-
-        mensaje="El email no contiene un formato correcto";
+        mensaje = "El email no contiene un formato correcto";
         break;
       }
-     
-
     }
-    let alert = this.alertCtrl.create({
+    let alert = this.alertCtrl.create(
+    {
       title: titulo,
       subTitle: mensaje,
-      buttons: ['OK']
+      buttons: ['OK'],
+      cssClass: 'alert'
     });
     alert.present();
   }  
 
   MiSpiner()
   {
-    let loader = this.spiner.create({
-      content:"Espere..",
-      duration: 2500
-      
-    });
-      loader.present();
-    
+    let loader = this.spiner.create(
+      {
+        content: "Espere...",
+        duration: 2500
+      });
+      return loader;
   }
-
 
   async Cancelar()
   {
-    this.navCtrl.push(LoginPage);
+    this.navCtrl.setRoot(LoginPage);
   }
-
 }
